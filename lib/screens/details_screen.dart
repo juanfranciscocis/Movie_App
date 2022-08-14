@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget{
 
@@ -9,10 +10,21 @@ class DetailsScreen extends StatelessWidget{
 
 
 
+
     return  Scaffold(
         body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          CustomAppBar(),
+          SliverList(
+              delegate: SliverChildListDelegate([
+                PosterAndTitle(),
+                Overview(),
+                Overview(),
+                Overview(),
+                CastingCards(),
+
+              ])
+          )
         ],
       )
     );
@@ -20,7 +32,26 @@ class DetailsScreen extends StatelessWidget{
 }
 
 
-class _CustomAppBar extends StatelessWidget{
+
+
+
+
+class CastingCards extends StatelessWidget{
+  const CastingCards({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 200,
+      color: Colors.red,
+    );
+  }
+}
+
+
+
+class CustomAppBar extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +81,77 @@ class _CustomAppBar extends StatelessWidget{
           image: NetworkImage('https://via.placeholder.com/300x400'),
         ),
       ),
-      
+
     );
   }
 }
+
+
+
+
+class PosterAndTitle extends StatelessWidget{
+  const PosterAndTitle({Key? key}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    return Container(
+        margin: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child:Row(
+          children: [
+            ClipRRect(
+              borderRadius:BorderRadius.circular(10),
+              child:FadeInImage(
+                placeholder: AssetImage('assets/no-image.jpg'),
+                image: NetworkImage('https://via.placeholder.com/200x300'),
+                height: 150,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+            SizedBox(width: 20),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Movie Title',style:textTheme.headline5, overflow: TextOverflow.ellipsis,maxLines: 2,),
+                Text('Original Title',style:textTheme.subtitle1, overflow: TextOverflow.ellipsis,maxLines: 2,),
+
+                Row(
+                  children:[
+                    Icon(Icons.star,color: Colors.yellow,size: 20,),
+                    SizedBox(width: 5),
+                    Text('MOVIE VOTE AVERAGE',style:textTheme.caption,),
+                  ],
+                )
+
+
+              ],
+            )
+
+
+          ],
+        )
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
