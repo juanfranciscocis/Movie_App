@@ -21,6 +21,7 @@ class DetailsScreen extends StatelessWidget{
                 Overview(),
                 Overview(),
                 Overview(),
+                Overview(),
                 CastingCards(),
 
               ])
@@ -42,12 +43,52 @@ class CastingCards extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 20),
       width: double.infinity,
       height: 200,
-      color: Colors.red,
+      //color: Colors.red,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 10,
+          itemBuilder: (context,index){
+        return _CastCard();
+      }),
     );
   }
 }
+
+
+class _CastCard extends StatelessWidget{
+  const _CastCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      width: 110,
+      height: 100,
+      //color: Colors.green,
+      child: Column(
+        children:[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: FadeInImage(
+                placeholder:  AssetImage('assets/no-image.jpg'),
+                image: NetworkImage('https://via.placeholder.com/300x400'),
+                fit: BoxFit.cover,
+            ),
+            ),
+          SizedBox(height: 5),
+          Text('Cast Name',maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,)
+
+        ],
+      ),
+    );
+
+
+  }
+}
+
 
 
 
