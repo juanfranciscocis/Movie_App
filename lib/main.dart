@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget{
         'home': (context) => HomeScreen(),
         'details': (context) => DetailsScreen(),
       },
-      theme: ThemeData.light().copyWith(
+      theme: ThemeData.dark().copyWith(
         appBarTheme: AppBarTheme(
-          color: Colors.indigo,
+          color: Colors.orangeAccent,
           elevation: 0,
         )
       ),

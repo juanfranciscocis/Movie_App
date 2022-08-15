@@ -97,7 +97,7 @@ class CustomAppBar extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return SliverAppBar( //SliverAppBar is a widget that can be used to display a flexible app bar that can be scrolled away from its pinned position.
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.orangeAccent,
       expandedHeight: 250,
       floating: false,
       pinned: true,
