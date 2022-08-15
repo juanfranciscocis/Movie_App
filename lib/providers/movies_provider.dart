@@ -6,8 +6,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movies/models/now_playing_response.dart';
+import 'package:movies/models/popular_response.dart';
 
 import '../models/movie.dart';
+import '../models/popular_movie.dart';
 class MoviesProvider extends ChangeNotifier{
 
   String _baseURL = 'api.themoviedb.org';
@@ -16,6 +18,7 @@ class MoviesProvider extends ChangeNotifier{
 
 
   List<Movie> onDisplayMovies = [];
+  List<PopularMovie> onDisplayPopularMovies = [];
 
 
 
@@ -23,6 +26,7 @@ class MoviesProvider extends ChangeNotifier{
   MoviesProvider(){
     print('Movies Provider initialized');
     getOnDisplayedMovies();
+    getPopularMovies();
   }
 
   getOnDisplayedMovies() async{
@@ -34,6 +38,7 @@ class MoviesProvider extends ChangeNotifier{
       'page': '1',
     });
 
+
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url);
     final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);//.results;
@@ -44,6 +49,35 @@ class MoviesProvider extends ChangeNotifier{
     notifyListeners(); //notify the widgets that the data has changed
 
   }
+
+
+  getPopularMovies() async {
+
+    print('getPopularMovies');
+
+    var url = Uri.https(_baseURL,'3/movie/popular',{
+      'api_key': _apiKey,
+      'language': _language,
+      'page': '1',
+    });
+
+
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.get(url);
+    final popularResponse = PopularMoviesResponse.fromJson(response.body);//.results;
+
+
+    onDisplayPopularMovies = popularResponse.results; //list of movies saved
+
+    notifyListeners(); //notify the widgets that the data has changed
+
+
+
+
+
+  }
+
+
 
 }
 

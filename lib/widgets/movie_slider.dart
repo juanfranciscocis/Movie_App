@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../models/popular_movie.dart';
+
 class MovieSlider extends StatelessWidget{
 
   //ATTRIBUTES
   final String seccionTitle;
-  final String movieTitle;
+  final List<PopularMovie> popularMovies;
+
 
 
   //CONSTRUCTOR
-  const MovieSlider({Key? key, required this.seccionTitle, this.movieTitle = 'NO TITLE'}) : super(key: key);
+  const MovieSlider({Key? key, required this.seccionTitle, required this.popularMovies,}) : super(key: key);
 
 
   @override
@@ -33,9 +36,9 @@ class MovieSlider extends StatelessWidget{
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
+              itemCount: popularMovies.length,
                 itemBuilder: (context,index){
-                  return _MoviePoster(movieTitle: movieTitle);
+                  return _MoviePoster(popularMovies: popularMovies,index: index);
                 },
             ),
           )
@@ -47,13 +50,18 @@ class MovieSlider extends StatelessWidget{
 }
 
 class _MoviePoster extends StatelessWidget {
-  final String movieTitle;
+  final List<PopularMovie> popularMovies;
+  final int index;
   const _MoviePoster({
-    Key? key, required this.movieTitle,
+    Key? key, required this.popularMovies, required this.index,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final movie = popularMovies[index];
+
+
     return Container(
       width: 130,
       height: 190,
@@ -70,7 +78,7 @@ class _MoviePoster extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
               child: FadeInImage(
                   placeholder: AssetImage('assets/no-image.jpg'),
-                  image: NetworkImage('https://via.placeholder.com/300x400'),
+                  image: NetworkImage(movie.getFullUrl()),
                   fit: BoxFit.cover,
                   width :130,
                   height: 180,
@@ -83,7 +91,7 @@ class _MoviePoster extends StatelessWidget {
           SizedBox(height: 2),
 
           Text(
-            movieTitle,
+            movie.title,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
 
