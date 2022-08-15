@@ -1,14 +1,16 @@
+
 import 'package:flutter/material.dart';
+import 'package:movies/providers/movies_provider.dart';
 import 'package:movies/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 void main(){
-  runApp(const MyApp());
+  runApp(AppState());
 }
 
 class MyApp extends StatelessWidget{
   //CONSTRUCTOR
   const MyApp({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,22 @@ class MyApp extends StatelessWidget{
       ),
     );
   }
-
-
-
-
 }
+
+
+
+class AppState extends StatelessWidget{
+  const AppState({Key? key}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => MoviesProvider(),lazy: true,),
+        ],
+        child: MyApp(),
+    );
+  }
+}
+

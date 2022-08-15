@@ -38,6 +38,11 @@ dependencies:
   # The following adds the movies cards for the application.
   card_swiper: ^2.0.4
 
+  # The following adds a way to comunicate with APYs
+  http: ^0.13.5
+
+  provider: ^6.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
