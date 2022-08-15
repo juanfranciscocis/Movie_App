@@ -6,12 +6,12 @@ class MovieSlider extends StatelessWidget{
 
   //ATTRIBUTES
   final String seccionTitle;
-  final List<PopularMovie> popularMovies;
+  final List<dynamic> movieOrTv;
 
 
 
   //CONSTRUCTOR
-  const MovieSlider({Key? key, required this.seccionTitle, required this.popularMovies,}) : super(key: key);
+  const MovieSlider({Key? key, required this.seccionTitle, required this.movieOrTv,}) : super(key: key);
 
 
   @override
@@ -36,9 +36,9 @@ class MovieSlider extends StatelessWidget{
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: popularMovies.length,
+              itemCount: movieOrTv.length,
                 itemBuilder: (context,index){
-                  return _MoviePoster(popularMovies: popularMovies,index: index);
+                  return _MoviePoster(movieOrTv: movieOrTv,index: index);
                 },
             ),
           )
@@ -50,16 +50,16 @@ class MovieSlider extends StatelessWidget{
 }
 
 class _MoviePoster extends StatelessWidget {
-  final List<PopularMovie> popularMovies;
+  final List<dynamic> movieOrTv;
   final int index;
   const _MoviePoster({
-    Key? key, required this.popularMovies, required this.index,
+    Key? key, required this.movieOrTv, required this.index,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    final movie = popularMovies[index];
+    final movie = movieOrTv[index];
 
 
     return Container(
