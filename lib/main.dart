@@ -5,7 +5,7 @@ import 'package:movies/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 void main(){
-  runApp(AppState());
+  runApp(const AppState());
 }
 
 class MyApp extends StatelessWidget{
@@ -36,15 +36,13 @@ class MyApp extends StatelessWidget{
 
 class AppState extends StatelessWidget{
   const AppState({Key? key}) : super(key: key);
-
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => MoviesProvider(),lazy: true,),
+          ChangeNotifierProvider(create: (_) => MoviesProvider(),lazy: false,),
         ],
-        child: MyApp(),
+        child: const MyApp(),
     );
   }
 }
