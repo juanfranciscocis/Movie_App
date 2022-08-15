@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:movies/models/response.dart';
+import 'package:movies/models/movie.dart';
 
 import 'dates.dart';
 
@@ -19,7 +19,7 @@ class NowPlayingResponse {
 
   Dates dates;
   int page;
-  List<Result> results;
+  List<Movie> results;
   int totalPages;
   int totalResults;
 
@@ -29,7 +29,7 @@ class NowPlayingResponse {
   factory NowPlayingResponse.fromMap(Map<String, dynamic> json) => NowPlayingResponse(
     dates: Dates.fromMap(json["dates"]),
     page: json["page"],
-    results: List<Result>.from(json["results"].map((x) => Result.fromMap(x))),
+    results: List<Movie>.from(json["results"].map((x) => Movie.fromMap(x))),
     totalPages: json["total_pages"],
     totalResults: json["total_results"],
   );

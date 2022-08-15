@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MovieSlider extends StatelessWidget{
-  const MovieSlider({Key? key}) : super(key: key);
+
+  //ATTRIBUTES
+  final String seccionTitle;
+  final String movieTitle;
+
+
+  //CONSTRUCTOR
+  const MovieSlider({Key? key, required this.seccionTitle, this.movieTitle = 'NO TITLE'}) : super(key: key);
 
 
   @override
@@ -16,7 +23,7 @@ class MovieSlider extends StatelessWidget{
           SizedBox(height: 5),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child:Text('Popular Movies',
+            child:Text(seccionTitle,
               style: TextStyle(
                 fontSize:20,
                 fontWeight: FontWeight.bold,
@@ -28,7 +35,7 @@ class MovieSlider extends StatelessWidget{
               scrollDirection: Axis.horizontal,
               itemCount: 20,
                 itemBuilder: (context,index){
-                  return _MoviePoster();
+                  return _MoviePoster(movieTitle: movieTitle);
                 },
             ),
           )
@@ -40,8 +47,9 @@ class MovieSlider extends StatelessWidget{
 }
 
 class _MoviePoster extends StatelessWidget {
+  final String movieTitle;
   const _MoviePoster({
-    Key? key,
+    Key? key, required this.movieTitle,
   }) : super(key: key);
 
   @override
@@ -75,7 +83,7 @@ class _MoviePoster extends StatelessWidget {
           SizedBox(height: 2),
 
           Text(
-            'Movie Title PUEDE SER TAN LARGO COMO QUIERA',
+            movieTitle,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
 
