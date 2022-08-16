@@ -38,6 +38,10 @@ class Movie {
     return 'https://image.tmdb.org/t/p/w500/$posterPath';
   }
 
+  getFullUrlBackdrop(){
+    return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+  }
+
 
   factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 

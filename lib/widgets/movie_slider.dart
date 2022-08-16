@@ -2,16 +2,48 @@ import 'package:flutter/material.dart';
 
 import '../models/popular_movie.dart';
 
-class MovieSlider extends StatelessWidget{
+class MovieSlider extends StatefulWidget{
 
   //ATTRIBUTES
   final String seccionTitle;
   final List<dynamic> movieOrTv;
+  final Function onNextPage;
 
 
 
   //CONSTRUCTOR
-  const MovieSlider({Key? key, required this.seccionTitle, required this.movieOrTv,}) : super(key: key);
+  const MovieSlider({Key? key, required this.seccionTitle, required this.movieOrTv, required this.onNextPage,}) : super(key: key);
+
+  @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    scrollController.addListener((){
+      if(scrollController.position.pixels+500 >= scrollController.position.maxScrollExtent){
+        widget.onNextPage();
+      }
+    });
+
+
+  }
+
+  @override
+  void dispose() {
+
+
+
+
+
+    super.dispose();
+  }
 
 
   @override
@@ -26,19 +58,20 @@ class MovieSlider extends StatelessWidget{
           SizedBox(height: 5),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child:Text(seccionTitle,
+            child:Text(widget.seccionTitle,
               style: TextStyle(
                 fontSize:20,
                 fontWeight: FontWeight.bold,
               ),),
           ),
-          
+
           Expanded(
             child: ListView.builder(
+              controller: scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: movieOrTv.length,
+              itemCount: widget.movieOrTv.length,
                 itemBuilder: (context,index){
-                  return _MoviePoster(movieOrTv: movieOrTv,index: index);
+                  return _MoviePoster(movieOrTv: widget.movieOrTv,index: index);
                 },
             ),
           )
@@ -72,7 +105,7 @@ class _MoviePoster extends StatelessWidget {
 
           GestureDetector(
             onTap: (){
-              Navigator.pushNamed(context, 'details', arguments: 'movie-instace');
+              Navigator.pushNamed(context, 'details', arguments: movieOrTv[index]);
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),

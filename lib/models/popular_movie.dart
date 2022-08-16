@@ -22,6 +22,10 @@ class PopularMovie {
     return 'https://image.tmdb.org/t/p/w500/$posterPath';
   }
 
+  getFullUrlBackdrop(){
+    return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+  }
+
   bool adult;
   String backdropPath;
   List<int> genreIds;

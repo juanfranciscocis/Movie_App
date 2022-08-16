@@ -23,6 +23,8 @@ class MoviesProvider extends ChangeNotifier{
   List<PopularMovie> onDisplayPopularMovies = [];
   List<TvShow> onDisplayPopularTvShows = [];
 
+  int _page = 0;
+
 
 
 
@@ -34,19 +36,28 @@ class MoviesProvider extends ChangeNotifier{
     getPopularTv();
   }
 
+
+  Future<String> _getJasonData(String endpoint, [int page  = 1])async{
+    var url = Uri.https(_baseURL,endpoint,{
+      'api_key': _apiKey,
+      'language': _language,
+      'page': '$page',
+    });
+
+    var response = await http.get(url);
+
+    return response.body;
+
+  }
+
+
+
+
   getOnDisplayedMovies() async{
     print('getOnDisplayedMovies');
 
-    var url = Uri.https(_baseURL,'3/movie/now_playing',{
-      'api_key': _apiKey,
-      'language': _language,
-      'page': '1',
-    });
-
-
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url);
-    final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);//.results;
+    final response = await _getJasonData('/3/movie/now_playing');
+    final nowPlayingResponse = NowPlayingResponse.fromJson(response);//.results;
 
 
     onDisplayMovies = nowPlayingResponse.results; //list of movies saved
@@ -60,24 +71,15 @@ class MoviesProvider extends ChangeNotifier{
 
     print('getPopularMovies');
 
-    var url = Uri.https(_baseURL,'3/movie/popular',{
-      'api_key': _apiKey,
-      'language': _language,
-      'page': '1',
-    });
+    _page++;
 
-
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url);
-    final popularResponse = PopularMoviesResponse.fromJson(response.body);//.results;
+    final response = await _getJasonData('/3/movie/popular',_page);
+    final popularResponse = PopularMoviesResponse.fromJson(response);//.results;
 
 
     onDisplayPopularMovies = popularResponse.results; //list of movies saved
 
     notifyListeners(); //notify the widgets that the data has changed
-
-
-
 
 
   }
@@ -86,24 +88,15 @@ class MoviesProvider extends ChangeNotifier{
 
     print('getPopularTv');
 
-    var url = Uri.https(_baseURL,'3/tv/popular',{
-      'api_key': _apiKey,
-      'language': _language,
-      'page': '1',
-    });
+    _page++;
 
-
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url);
-    final popularResponse = PopularTvShowResponse.fromJson(response.body);//.results;
+    final response = await _getJasonData('/3/tv/popular',_page);
+    final popularResponse = PopularTvShowResponse.fromJson(response);//.results;
 
 
     onDisplayPopularTvShows = popularResponse.results; //list of movies saved
 
     notifyListeners(); //notify the widgets that the data has changed
-
-
-
 
 
   }

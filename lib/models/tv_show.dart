@@ -9,7 +9,7 @@ class TvShow {
     required this.title,
     required this.originCountry,
     required this.originalLanguage,
-    required this.originalName,
+    required this.originalTitle,
     required this.overview,
     required this.popularity,
     required this.posterPath,
@@ -24,7 +24,7 @@ class TvShow {
   String title;
   List<String> originCountry;
   String originalLanguage;
-  String originalName;
+  String originalTitle;
   String overview;
   double popularity;
   String posterPath;
@@ -41,7 +41,7 @@ class TvShow {
     title: json["name"],
     originCountry: List<String>.from(json["origin_country"].map((x) => x)),
     originalLanguage: json["original_language"],
-    originalName: json["original_name"],
+    originalTitle: json["original_name"],
     overview: json["overview"],
     popularity: json["popularity"].toDouble(),
     posterPath: json["poster_path"],
@@ -52,6 +52,10 @@ class TvShow {
 
   getFullUrl(){
     return 'https://image.tmdb.org/t/p/w500/$posterPath';
+  }
+
+  getFullUrlBackdrop(){
+    return 'https://image.tmdb.org/t/p/w500/$backdropPath';
   }
 
 }
