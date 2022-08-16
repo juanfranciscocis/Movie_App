@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
+import '../providers/movies_provider.dart';
 
 class DetailsScreen extends StatelessWidget{
 
@@ -10,6 +12,7 @@ class DetailsScreen extends StatelessWidget{
 
     final dynamic movieOrTv = ModalRoute.of(context)!.settings.arguments ;
     print(movieOrTv.title);
+    print(movieOrTv.id);
 
 
 
@@ -25,7 +28,7 @@ class DetailsScreen extends StatelessWidget{
                 Overview(movieOrTv: movieOrTv,),
                 Overview(movieOrTv: movieOrTv,),
                 Overview(movieOrTv: movieOrTv,),
-                CastingCards(),
+                CastingCards(movieOrTvID:movieOrTv.id),
 
               ])
           )
@@ -41,50 +44,73 @@ class DetailsScreen extends StatelessWidget{
 
 
 class CastingCards extends StatelessWidget{
-  const CastingCards({Key? key}) : super(key: key);
+  final dynamic movieOrTvID;
+
+
+  const CastingCards({Key? key, required this.movieOrTvID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 20),
-      width: double.infinity,
-      height: 200,
-      //color: Colors.red,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 10,
-          itemBuilder: (context,index){
-        return _CastCard();
-      }),
-    );
+
+    final moviesProvider = Provider.of<MoviesProvider>(context);  //get the provider
+
+    return FutureBuilder(
+        future: moviesProvider.getMovieCast(movieOrTvID),
+        builder:( BuildContext context, AsyncSnapshot snapshot){
+
+          final cast = snapshot.data;
+
+
+          return Container(
+            margin: EdgeInsets.only(top: 20),
+            width: double.infinity,
+            height: 250,
+            //color: Colors.red,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: cast.length,
+                itemBuilder: (context,index){
+                  return _CastCard(cast:cast,index:index);
+                }),
+          );;
+    },
+    );  //get the cast of the movie
+
+
   }
 }
 
 
 class _CastCard extends StatelessWidget{
-  const _CastCard({Key? key}) : super(key: key);
+
+  final dynamic cast;
+  final int index;
+
+  const _CastCard({Key? key, required this.cast, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      width: 110,
-      height: 100,
-      //color: Colors.green,
-      child: Column(
-        children:[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: FadeInImage(
-                placeholder:  AssetImage('assets/no-image.jpg'),
-                image: NetworkImage('https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg'),
-                fit: BoxFit.cover,
-            ),
-            ),
-          SizedBox(height: 5),
-          Text('Cast Name',maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,)
+    return Flexible(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        width: 110,
+        height: 100,
+        //color: Colors.green,
+        child: Column(
+          children:[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: FadeInImage(
+                  placeholder:  AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(cast[index].getFullUrl()),
+                  fit: BoxFit.cover,
+              ),
+              ),
+            SizedBox(height: 10),
+            Text(cast[index].name,maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,)
 
-        ],
+          ],
+        ),
       ),
     );
 

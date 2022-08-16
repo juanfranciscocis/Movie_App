@@ -10,6 +10,8 @@ import 'package:movies/models/popular_response.dart';
 import 'package:movies/models/tv_show_response.dart';
 
 import '../models/movie.dart';
+import '../models/movie_cast.dart';
+import '../models/movie_cast_response.dart';
 import '../models/popular_movie.dart';
 import '../models/tv_show.dart';
 class MoviesProvider extends ChangeNotifier{
@@ -24,6 +26,9 @@ class MoviesProvider extends ChangeNotifier{
   List<TvShow> onDisplayPopularTvShows = [];
 
   int _page = 0;
+
+
+  Map<int,List<Cast>> _movieCast = {};
 
 
 
@@ -97,6 +102,26 @@ class MoviesProvider extends ChangeNotifier{
     onDisplayPopularTvShows = popularResponse.results; //list of movies saved
 
     notifyListeners(); //notify the widgets that the data has changed
+
+
+  }
+
+  Future<List<Cast>> getMovieCast(int movieID) async{
+
+
+  if(_movieCast.containsKey(movieID)){
+      return _movieCast[movieID]!;
+  }
+
+    //Revisar el mapa
+    print('getMovieCast');
+
+    final response = await _getJasonData('/3/movie/$movieID/credits');
+    final movieCastResponse = MovieCastResponse.fromJson(response);//.results;
+
+    _movieCast[movieID] = movieCastResponse.cast; //list of movies saved
+
+    return movieCastResponse.cast;
 
 
   }
