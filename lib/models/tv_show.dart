@@ -31,6 +31,7 @@ class TvShow {
   double voteAverage;
   int voteCount;
 
+
   factory TvShow.fromJson(String str) => TvShow.fromMap(json.decode(str));
 
   factory TvShow.fromMap(Map<String, dynamic> json) => TvShow(

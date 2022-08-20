@@ -180,14 +180,17 @@ class PosterAndTitle extends StatelessWidget{
         padding: EdgeInsets.symmetric(horizontal: 20),
         child:Row(
           children: [
-            ClipRRect(
-              borderRadius:BorderRadius.circular(10),
-              child:FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(movieOrTv.getFullUrl()),
-                width: 100,
-                height: 150,
-                fit: BoxFit.cover,
+            Hero(
+              tag: movieOrTv.id,
+              child: ClipRRect(
+                borderRadius:BorderRadius.circular(10),
+                child:FadeInImage(
+                  placeholder: AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(movieOrTv.getFullUrl()),
+                  width: 100,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
 

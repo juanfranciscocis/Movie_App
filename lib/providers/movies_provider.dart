@@ -1,6 +1,7 @@
 
 
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:movies/models/now_playing_response.dart';
 import 'package:movies/models/popular_response.dart';
 import 'package:movies/models/tv_show_response.dart';
 
+import '../helpers/debouncer.dart';
 import '../models/movie.dart';
 import '../models/movie_cast.dart';
 import '../models/movie_cast_response.dart';
@@ -31,6 +33,10 @@ class MoviesProvider extends ChangeNotifier{
 
 
   Map<int,List<Cast>> _movieCast = {};
+
+  final debouncer = Debouncer(duration: Duration(milliseconds: 500));
+  final StreamController<List<Movie>> suggetsionController = StreamController.broadcast();
+  Stream<List<Movie>> get suggestionStream => suggetsionController.stream;
 
 
 
@@ -147,6 +153,32 @@ class MoviesProvider extends ChangeNotifier{
 
 
   }
+
+
+  void getSuggestionsByQuery(String searchTerm){
+
+    debouncer.value = '';
+    debouncer.onValue = (value) async{
+
+      //print('TENEMOS VALOR A BUSCAR : $value');
+
+      final results =   await searchMovie(value);
+
+      suggetsionController.add(results);
+
+      final timer = Timer.periodic(Duration(milliseconds: 300), (_) {
+        debouncer.value = searchTerm;
+      });
+
+      Future.delayed(Duration(milliseconds: 301)).then((value) => timer.cancel());
+
+
+    };
+
+
+  }
+
+
 
 
 
