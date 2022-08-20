@@ -13,6 +13,7 @@ import '../models/movie.dart';
 import '../models/movie_cast.dart';
 import '../models/movie_cast_response.dart';
 import '../models/popular_movie.dart';
+import '../models/search_response.dart';
 import '../models/tv_show.dart';
 class MoviesProvider extends ChangeNotifier{
 
@@ -24,6 +25,7 @@ class MoviesProvider extends ChangeNotifier{
   List<Movie> onDisplayMovies = [];
   List<PopularMovie> onDisplayPopularMovies = [];
   List<TvShow> onDisplayPopularTvShows = [];
+  List<Movie> searchMovies = [];
 
   int _page = 0;
 
@@ -122,6 +124,26 @@ class MoviesProvider extends ChangeNotifier{
     _movieCast[movieID] = movieCastResponse.cast; //list of movies saved
 
     return movieCastResponse.cast;
+
+
+  }
+
+
+  Future<List<Movie>>searchMovie(String query) async{
+
+    var url = Uri.https(_baseURL,'3/search/movie',{
+      'api_key': _apiKey,
+      'query': query,
+    });
+
+    print('searchMovie');
+
+    var response = await http.get(url);
+
+    final searchResponse = MovieAndTvSearchResponse.fromJson(response.body);
+
+
+    return searchResponse.results;
 
 
   }

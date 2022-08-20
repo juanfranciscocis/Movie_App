@@ -61,17 +61,19 @@ class CastingCards extends StatelessWidget{
           final cast = snapshot.data;
 
 
-          return Container(
-            margin: EdgeInsets.only(top: 20),
-            width: double.infinity,
-            height: 250,
-            //color: Colors.red,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: cast.length,
-                itemBuilder: (context,index){
-                  return _CastCard(cast:cast,index:index);
-                }),
+          return Flexible(
+            child: Container(
+              margin: EdgeInsets.only(top: 20),
+              width: double.infinity,
+              height: 250,
+              //color: Colors.red,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: cast.length,
+                  itemBuilder: (context,index){
+                    return _CastCard(cast:cast,index:index);
+                  }),
+            ),
           );;
     },
     );  //get the cast of the movie
