@@ -31,5 +31,5 @@ You can take a look at some images here:
   <img src="https://github.com/juanfranciscocis/Movie_App/blob/c21db057b2885860241da2307bfc92792040e662/README%20IMAGES/DARK%20IMAGES/3.png"width="300"/>
   <img src="https://github.com/juanfranciscocis/Movie_App/blob/c21db057b2885860241da2307bfc92792040e662/README%20IMAGES/DARK%20IMAGES/4.png"width="300"/>
   <img src="https://github.com/juanfranciscocis/Movie_App/blob/c21db057b2885860241da2307bfc92792040e662/README%20IMAGES/DARK%20IMAGES/5.png"width="300"/>
-  <img src="https://github.com/juanfranciscocis/Movie_App/blob/c21db057b2885860241da2307bfc92792040e662/README%20IMAGES/NORMAL%20IMAGES/6.png"width="300"/>
+  <img src="https://github.com/juanfranciscocis/Movie_App/blob/c21db057b2885860241da2307bfc92792040e662/README%20IMAGES/DARK%20IMAGES/6.png"width="300"/>
 </p>
